@@ -1,0 +1,35 @@
+
+./network.sh up createChannel -c channel1
+export DOCKER_SOCK=/var/run/docker.sock
+cd districtofficials/
+../../bin/cryptogen generate --config=districtofficials-crypto.yaml --output="../organizations"
+export FABRIC_CFG_PATH=$PWD
+../../bin/configtxgen -printOrg districtofficialsMSP > ../organizations/peerOrganizations/districtofficials.example.com/districtofficials.json
+docker-compose -f compose/compose-districtofficials.yaml -f compose/docker/docker-compose-districtofficials.yaml up -d
+docker ps
+
+cd ..
+cd ITDA/
+../../bin/cryptogen generate --config=ITDA-crypto.yaml --output="../organizations"
+export FABRIC_CFG_PATH=$PWD
+../../bin/configtxgen -printOrg ITDAMSP > ../organizations/peerOrganizations/ITDA.example.com/ITDA.json
+docker-compose -f compose/compose-ITDA.yaml -f compose/docker/docker-compose-ITDA.yaml up -d
+docker ps
+
+cd ..
+cd district/
+../../bin/cryptogen generate --config=district-crypto.yaml --output="../organizations"
+export FABRIC_CFG_PATH=$PWD
+../../bin/configtxgen -printOrg districtMSP > ../organizations/peerOrganizations/district.example.com/district.json
+docker-compose -f compose/compose-district.yaml -f compose/docker/docker-compose-district.yaml up -d
+docker ps
+cd ..
+
+
+# org2 environment variables
+export CORE_PEER_LOCALMSPID=org2MSP
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp
+export CORE_PEER_ADDRESS=peer0.org2.example.com:9051  # Docker service name
+export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
+export CORE_PEER_TLS_ENABLED=true
+export CORE_PEER_TLS_SERVERHOSTOVERRIDE=peer0.org2.example.com  # Matches TLS certificate

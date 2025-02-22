@@ -1,0 +1,138 @@
+export FABRIC_CFG_PATH=$PWD/configtx
+../bin/configtxgen -profile Channel2 -outputBlock ./channel-artifacts/channel2.block -channelID channel2
+
+
+export ORDERER_CA=${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt
+export ORDERER_ADMIN_TLS_CERT=${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
+export ORDERER_ADMIN_TLS_KEY=${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.key
+
+
+
+#************************IMPORTANT*************************************************
+#add in configxt/configxt.ymal file
+
+#Consortium: SampleConsortium
+
+
+#Channel2:
+#    Consortium: SampleConsortium
+ #   <<: *ChannelDefaults
+#    Orderer:
+ #     <<: *OrdererDefaults
+
+#*********************************************************************
+
+
+curl -X POST \
+  --cacert ${ORDERER_CA} \
+  --cert ${ORDERER_ADMIN_TLS_CERT} \
+  --key ${ORDERER_ADMIN_TLS_KEY} \
+  -H "Content-Type: multipart/form-data" \
+  -F "config-block=@channel-artifacts/channel2.block" \
+  https://localhost:7053/participation/v1/channels
+
+
+
+#// checking the channel 
+
+curl -X GET \
+  --cacert ${ORDERER_CA} \
+  --cert ${ORDERER_ADMIN_TLS_CERT} \
+  --key ${ORDERER_ADMIN_TLS_KEY} \
+  https://localhost:7053/participation/v1/channels
+
+
+
+
+#// env for peer  ITDA
+export CORE_PEER_LOCALMSPID=ITDAMSP
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/ITDA.example.com/users/Admin@ITDA.example.com/msp
+export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/ITDA.example.com/peers/superintendent.ITDA.example.com/tls/ca.crt
+export CORE_PEER_ADDRESS=localhost:28051  
+export CORE_PEER_TLS_ENABLED=true
+export CORE_PEER_TLS_SERVERHOSTOVERRIDE=superintendent.ITDA.example.com
+
+peer channel join -b ./channel-artifacts/channel2.block -o localhost:7053 --ordererTLSHostnameOverride orderer.example.com --tls --cafile ${ORDERER_CA}
+
+ 
+export CORE_PEER_LOCALMSPID=ITDAMSP
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/ITDA.example.com/users/Admin@ITDA.example.com/msp
+export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/ITDA.example.com/peers/land-surveyor.ITDA.example.com/tls/ca.crt
+export CORE_PEER_ADDRESS=localhost:30051  
+export CORE_PEER_TLS_ENABLED=true
+export CORE_PEER_TLS_SERVERHOSTOVERRIDE=land-surveyor.ITDA.example.com
+
+peer channel join -b ./channel-artifacts/channel2.block -o localhost:7053 --ordererTLSHostnameOverride orderer.example.com --tls --cafile ${ORDERER_CA}
+
+
+export CORE_PEER_LOCALMSPID=ITDAMSP
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/ITDA.example.com/users/Admin@ITDA.example.com/msp
+export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/ITDA.example.com/peers/project-officer.ITDA.example.com/tls/ca.crt
+export CORE_PEER_ADDRESS=localhost:31051  
+export CORE_PEER_TLS_ENABLED=true
+export CORE_PEER_TLS_SERVERHOSTOVERRIDE=project-officer.ITDA.example.com  
+
+peer channel join -b ./channel-artifacts/channel2.block -o localhost:7053 --ordererTLSHostnameOverride orderer.example.com --tls --cafile ${ORDERER_CA}
+
+
+export CORE_PEER_LOCALMSPID=ITDAMSP
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/ITDA.example.com/users/Admin@ITDA.example.com/msp
+export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/ITDA.example.com/peers/clerk.ITDA.example.com/tls/ca.crt
+export CORE_PEER_ADDRESS=localhost:29051  
+export CORE_PEER_TLS_ENABLED=true
+export CORE_PEER_TLS_SERVERHOSTOVERRIDE=clerk.ITDA.example.com  
+
+peer channel join -b ./channel-artifacts/channel2.block -o localhost:7053 --ordererTLSHostnameOverride orderer.example.com --tls --cafile ${ORDERER_CA}
+
+
+#// env for peer  district
+
+
+
+export CORE_PEER_LOCALMSPID=districtMSP
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/district.example.com/users/Admin@district.example.com/msp
+export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/district.example.com/peers/surveyor.district.example.com/tls/ca.crt
+export CORE_PEER_ADDRESS=localhost:20051  
+export CORE_PEER_TLS_ENABLED=true
+export CORE_PEER_TLS_SERVERHOSTOVERRIDE=surveyor.district.example.com  
+
+peer channel join -b ./channel-artifacts/channel2.block -o localhost:7053 --ordererTLSHostnameOverride orderer.example.com --tls --cafile ${ORDERER_CA}
+
+export CORE_PEER_LOCALMSPID=districtMSP
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/district.example.com/users/Admin@district.example.com/msp
+export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/district.example.com/peers/revenue_inspector.district.example.com/tls/ca.crt
+export CORE_PEER_ADDRESS=localhost:21051  
+export CORE_PEER_TLS_ENABLED=true
+export CORE_PEER_TLS_SERVERHOSTOVERRIDE=revenue_inspector.district.example.com  
+
+peer channel join -b ./channel-artifacts/channel2.block -o localhost:7053 --ordererTLSHostnameOverride orderer.example.com --tls --cafile ${ORDERER_CA}
+
+
+export CORE_PEER_LOCALMSPID=districtMSP
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/district.example.com/users/Admin@district.example.com/msp
+export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/district.example.com/peers/MRO.district.example.com/tls/ca.crt
+export CORE_PEER_ADDRESS=localhost:22051  
+export CORE_PEER_TLS_ENABLED=true
+export CORE_PEER_TLS_SERVERHOSTOVERRIDE=MRO.district.example.com  
+
+peer channel join -b ./channel-artifacts/channel2.block -o localhost:7053 --ordererTLSHostnameOverride orderer.example.com --tls --cafile ${ORDERER_CA}
+
+
+export CORE_PEER_LOCALMSPID=districtMSP
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/district.example.com/users/Admin@district.example.com/msp
+export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/district.example.com/peers/VRO.district.example.com/tls/ca.crt
+export CORE_PEER_ADDRESS=localhost:23051  
+export CORE_PEER_TLS_ENABLED=true
+export CORE_PEER_TLS_SERVERHOSTOVERRIDE=VRO.district.example.com  
+
+peer channel join -b ./channel-artifacts/channel2.block -o localhost:7053 --ordererTLSHostnameOverride orderer.example.com --tls --cafile ${ORDERER_CA}
+
+export CORE_PEER_LOCALMSPID=districtMSP
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/district.example.com/users/Admin@district.example.com/msp
+export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/district.example.com/peers/RDO.district.example.com/tls/ca.crt
+export CORE_PEER_ADDRESS=localhost:19051  
+export CORE_PEER_TLS_ENABLED=true
+export CORE_PEER_TLS_SERVERHOSTOVERRIDE=RDO.district.example.com  
+
+peer channel join -b ./channel-artifacts/channel2.block -o localhost:7053 --ordererTLSHostnameOverride orderer.example.com --tls --cafile ${ORDERER_CA}
+

@@ -1,0 +1,47 @@
+cd ~/go/src/github.com/ayushrana77/fabric-samples/test-network
+./network.sh down
+
+
+
+
+Step 3: Remove Docker Containers, Images, Volumes, and Networks
+Execute the following commands:
+
+######################33
+# Stop and remove all running Fabric containers
+docker rm -f $(docker ps -aq)
+
+# Remove all Fabric Docker images
+docker rmi -f $(docker images | grep "hyperledger" | awk '{print $3}')
+
+# Remove all Docker volumes (including peer data)
+docker volume prune -f
+
+# Remove all Docker networks
+docker network prune -f
+
+##############################
+##############################
+
+docker ps -a  # Should return nothing
+docker images  # Should return nothing
+docker volume ls  # Should return nothing
+##############################3
+
+You still have Docker volumes related to your Fabric network. To remove all Docker volumes, run:
+
+#########################################3
+
+docker volume rm $(docker volume ls -q)
+
+############################################
+
+Verify Everything is Removed
+After running the above command, check again:
+
+###########################################33
+docker volume ls  # Should return nothing
+
+#############################################
+
+Once volumes are removed, your system should be fully reset. Let me know if you need further assistance! 🚀
