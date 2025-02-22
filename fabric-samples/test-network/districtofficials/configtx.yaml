@@ -1,0 +1,30 @@
+Organizations:
+    - &districtofficials
+        Name: districtofficialsMSP
+        ID: districtofficialsMSP
+
+        MSPDir: ../organizations/peerOrganizations/districtofficials.example.com/msp
+
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('districtofficialsMSP.admin', 'districtofficialsMSP.peer', 'districtofficialsMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('districtofficialsMSP.admin', 'districtofficialsMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('districtofficialsMSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('districtofficialsMSP.peer')"
+
+        AnchorPeers:
+            - Host: dc.districtofficials.example.com
+              Port: 24051
+            - Host: jc.districtofficials.example.com
+              Port: 25051
+            - Host: ministry-of-tribal-welfare.districtofficials.example.com
+              Port: 26051
+            - Host: po.districtofficials.example.com
+              Port: 27051

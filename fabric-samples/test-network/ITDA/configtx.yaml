@@ -1,0 +1,31 @@
+Organizations:
+    - &ITDA
+        Name: ITDAMSP
+        ID: ITDAMSP
+
+        MSPDir: ../organizations/peerOrganizations/ITDA.example.com/msp
+
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('ITDAMSP.admin', 'ITDAMSP.peer', 'ITDAMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('ITDAMSP.admin', 'ITDAMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('ITDAMSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('ITDAMSP.peer')"
+
+        AnchorPeers:
+            - Host: project-officer.ITDA.example.com
+              Port: 31051
+            - Host: clerk.ITDA.example.com
+              Port: 29051
+            - Host: superintendent.ITDA.example.com
+              Port: 28051
+            - Host: land-surveyor.ITDA.example.com
+              Port: 30051
+            

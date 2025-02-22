@@ -1,0 +1,178 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '3.7'
+
+volumes:
+  dc.districtofficials.example.com:
+  jc.districtofficials.example.com:
+  ministry-of-tribal-welfare.districtofficials.example.com:
+  po.districtofficials.example.com:
+
+networks:
+  test:
+    name: fabric_test
+
+services:
+
+  dc.districtofficials.example.com:
+    container_name: dc.districtofficials.example.com
+    image: hyperledger/fabric-peer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - FABRIC_CFG_PATH=/etc/hyperledger/peercfg
+      - FABRIC_LOGGING_SPEC=INFO
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_ENDORSER_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      # Peer specific variables
+      - CORE_PEER_ID=dc.districtofficials.example.com
+      - CORE_PEER_ADDRESS=dc.districtofficials.example.com:24051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:24051
+      - CORE_PEER_CHAINCODEADDRESS=dc.districtofficials.example.com:24052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:24052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=dc.districtofficials.example.com:24051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=dc.districtofficials.example.com:24051
+      - CORE_PEER_LOCALMSPID=districtofficialsMSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
+      - CORE_OPERATIONS_LISTENADDRESS=dc.districtofficials.example.com:24445
+      - CORE_METRICS_PROVIDER=prometheus
+      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"dc"}
+      - CORE_CHAINCODE_EXECUTETIMEOUT=300s
+    volumes:
+      - ../../organizations/peerOrganizations/districtofficials.example.com/peers/dc.districtofficials.example.com:/etc/hyperledger/fabric
+      - dc.districtofficials.example.com:/var/hyperledger/production
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    ports:
+      - 24051:24051
+      - 24445:24445
+    networks:
+      - test
+  
+  jc.districtofficials.example.com:
+    container_name: jc.districtofficials.example.com
+    image: hyperledger/fabric-peer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - FABRIC_CFG_PATH=/etc/hyperledger/peercfg
+      - FABRIC_LOGGING_SPEC=INFO
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_ENDORSER_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      # Peer specific variables
+      - CORE_PEER_ID=jc.districtofficials.example.com
+      - CORE_PEER_ADDRESS=jc.districtofficials.example.com:25051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:25051
+      - CORE_PEER_CHAINCODEADDRESS=jc.districtofficials.example.com:25052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:25052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=jc.districtofficials.example.com:25051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=jc.districtofficials.example.com:25051
+      - CORE_PEER_LOCALMSPID=districtofficialsMSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
+      - CORE_OPERATIONS_LISTENADDRESS=jc.districtofficials.example.com:25445
+      - CORE_METRICS_PROVIDER=prometheus
+      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"jc"}
+      - CORE_CHAINCODE_EXECUTETIMEOUT=300s
+    volumes:
+      - ../../organizations/peerOrganizations/districtofficials.example.com/peers/jc.districtofficials.example.com:/etc/hyperledger/fabric
+      - jc.districtofficials.example.com:/var/hyperledger/production
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    ports:
+      - 25051:25051
+      - 25445:25445
+    networks:
+      - test
+  
+  ministry-of-tribal-welfare.districtofficials.example.com:
+    container_name: ministry-of-tribal-welfare.districtofficials.example.com
+    image: hyperledger/fabric-peer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - FABRIC_CFG_PATH=/etc/hyperledger/peercfg
+      - FABRIC_LOGGING_SPEC=INFO
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_ENDORSER_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      # Peer specific variables
+      - CORE_PEER_ID=ministry-of-tribal-welfare.districtofficials.example.com
+      - CORE_PEER_ADDRESS=ministry-of-tribal-welfare.districtofficials.example.com:26051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:26051
+      - CORE_PEER_CHAINCODEADDRESS=ministry-of-tribal-welfare.districtofficials.example.com:26052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:26052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=ministry-of-tribal-welfare.districtofficials.example.com:26051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=ministry-of-tribal-welfare.districtofficials.example.com:26051
+      - CORE_PEER_LOCALMSPID=districtofficialsMSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
+      - CORE_OPERATIONS_LISTENADDRESS=ministry-of-tribal-welfare.districtofficials.example.com:26445
+      - CORE_METRICS_PROVIDER=prometheus
+      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"ministry-of-tribal-welfare"}
+      - CORE_CHAINCODE_EXECUTETIMEOUT=300s
+    volumes:
+      - ../../organizations/peerOrganizations/districtofficials.example.com/peers/ministry-of-tribal-welfare.districtofficials.example.com:/etc/hyperledger/fabric
+      - ministry-of-tribal-welfare.districtofficials.example.com:/var/hyperledger/production
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    ports:
+      - 26051:26051
+      - 26445:26445
+    networks:
+      - test
+  
+  po.districtofficials.example.com:
+    container_name: po.districtofficials.example.com
+    image: hyperledger/fabric-peer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - FABRIC_CFG_PATH=/etc/hyperledger/peercfg
+      - FABRIC_LOGGING_SPEC=INFO
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_ENDORSER_ENABLED=false
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      # Peer specific variables
+      - CORE_PEER_ID=po.districtofficials.example.com
+      - CORE_PEER_ADDRESS=po.districtofficials.example.com:27051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:27051
+      - CORE_PEER_CHAINCODEADDRESS=po.districtofficials.example.com:27052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:27052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=po.districtofficials.example.com:27051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=po.districtofficials.example.com:27051
+      - CORE_PEER_LOCALMSPID=districtofficialsMSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
+      - CORE_OPERATIONS_LISTENADDRESS=po.districtofficials.example.com:27445
+      - CORE_METRICS_PROVIDER=prometheus
+      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"po"}
+      - CORE_CHAINCODE_EXECUTETIMEOUT=300s
+    volumes:
+      - ../../organizations/peerOrganizations/districtofficials.example.com/peers/po.districtofficials.example.com:/etc/hyperledger/fabric
+      - po.districtofficials.example.com:/var/hyperledger/production
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    ports:
+      - 27051:27051
+      - 27445:27445
+    networks:
+      - test

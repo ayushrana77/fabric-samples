@@ -1,0 +1,216 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '3.7'
+
+volumes:
+  surveyor.district.example.com:
+  revenue_inspector.district.example.com:
+  MRO.district.example.com:
+  VRO.district.example.com:
+  RDO.district.example.com:
+
+networks:
+  test:
+    name: fabric_test
+
+services:
+
+  surveyor.district.example.com:
+    container_name: surveyor.district.example.com
+    image: hyperledger/fabric-peer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - FABRIC_CFG_PATH=/etc/hyperledger/peercfg
+      - FABRIC_LOGGING_SPEC=INFO
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      # Peer specific variables
+      - CORE_PEER_ID=surveyor.district.example.com
+      - CORE_PEER_ADDRESS=surveyor.district.example.com:20051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:20051
+      - CORE_PEER_CHAINCODEADDRESS=surveyor.district.example.com:20052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:20052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=surveyor.district.example.com:20051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=surveyor.district.example.com:20051
+      - CORE_PEER_LOCALMSPID=districtMSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
+      - CORE_OPERATIONS_LISTENADDRESS=surveyor.district.example.com:20445
+      - CORE_METRICS_PROVIDER=prometheus
+      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"RDO"}
+      - CORE_CHAINCODE_EXECUTETIMEOUT=300s
+    volumes:
+      - ../../organizations/peerOrganizations/district.example.com/peers/surveyor.district.example.com:/etc/hyperledger/fabric
+      - surveyor.district.example.com:/var/hyperledger/production
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    ports:
+      - 20051:20051
+      - 20445:20445
+    networks:
+      - test
+  
+  revenue_inspector.district.example.com:
+    container_name: revenue_inspector.district.example.com
+    image: hyperledger/fabric-peer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - FABRIC_CFG_PATH=/etc/hyperledger/peercfg
+      - FABRIC_LOGGING_SPEC=INFO
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      # Peer specific variables
+      - CORE_PEER_ID=revenue_inspector.district.example.com
+      - CORE_PEER_ADDRESS=revenue_inspector.district.example.com:21051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:21051
+      - CORE_PEER_CHAINCODEADDRESS=revenue_inspector.district.example.com:21052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:21052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=revenue_inspector.district.example.com:21051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=revenue_inspector.district.example.com:21051
+      - CORE_PEER_LOCALMSPID=districtMSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
+      - CORE_OPERATIONS_LISTENADDRESS=revenue_inspector.district.example.com:21445
+      - CORE_METRICS_PROVIDER=prometheus
+      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"RDO"}
+      - CORE_CHAINCODE_EXECUTETIMEOUT=300s
+    volumes:
+      - ../../organizations/peerOrganizations/district.example.com/peers/revenue_inspector.district.example.com:/etc/hyperledger/fabric
+      - revenue_inspector.district.example.com:/var/hyperledger/production
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    ports:
+      - 21051:21051
+      - 21445:21445
+    networks:
+      - test
+  
+  MRO.district.example.com:
+    container_name: MRO.district.example.com
+    image: hyperledger/fabric-peer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - FABRIC_CFG_PATH=/etc/hyperledger/peercfg
+      - FABRIC_LOGGING_SPEC=INFO
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_ENDORSER_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      # Peer specific variables
+      - CORE_PEER_ID=MRO.district.example.com
+      - CORE_PEER_ADDRESS=MRO.district.example.com:22051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:22051
+      - CORE_PEER_CHAINCODEADDRESS=MRO.district.example.com:22052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:22052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=MRO.district.example.com:22051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=MRO.district.example.com:22051
+      - CORE_PEER_LOCALMSPID=districtMSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
+      - CORE_OPERATIONS_LISTENADDRESS=MRO.district.example.com:22445
+      - CORE_METRICS_PROVIDER=prometheus
+      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"RDO"}
+      - CORE_CHAINCODE_EXECUTETIMEOUT=300s
+    volumes:
+      - ../../organizations/peerOrganizations/district.example.com/peers/MRO.district.example.com:/etc/hyperledger/fabric
+      - MRO.district.example.com:/var/hyperledger/production
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    ports:
+      - 22051:22051
+      - 22445:22445
+    networks:
+      - test
+  
+  VRO.district.example.com:
+    container_name: VRO.district.example.com
+    image: hyperledger/fabric-peer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - FABRIC_CFG_PATH=/etc/hyperledger/peercfg
+      - FABRIC_LOGGING_SPEC=INFO
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      # Peer specific variables
+      - CORE_PEER_ID=VRO.district.example.com
+      - CORE_PEER_ADDRESS=VRO.district.example.com:23051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:23051
+      - CORE_PEER_CHAINCODEADDRESS=VRO.district.example.com:23052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:23052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=VRO.district.example.com:23051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=VRO.district.example.com:23051
+      - CORE_PEER_LOCALMSPID=districtMSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
+      - CORE_OPERATIONS_LISTENADDRESS=VRO.district.example.com:23445
+      - CORE_METRICS_PROVIDER=prometheus
+      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"RDO"}
+      - CORE_CHAINCODE_EXECUTETIMEOUT=300s
+    volumes:
+      - ../../organizations/peerOrganizations/district.example.com/peers/VRO.district.example.com:/etc/hyperledger/fabric
+      - VRO.district.example.com:/var/hyperledger/production
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    ports:
+      - 23051:23051
+      - 23445:23445
+    networks:
+      - test
+  
+  RDO.district.example.com:
+    container_name: RDO.district.example.com
+    image: hyperledger/fabric-peer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - FABRIC_CFG_PATH=/etc/hyperledger/peercfg
+      - FABRIC_LOGGING_SPEC=INFO
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_ENDORSER_ENABLED=false
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      # Peer specific variables
+      - CORE_PEER_ID=RDO.district.example.com
+      - CORE_PEER_ADDRESS=RDO.district.example.com:19051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:19051
+      - CORE_PEER_CHAINCODEADDRESS=RDO.district.example.com:19052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:19052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=RDO.district.example.com:19051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=RDO.district.example.com:19051
+      - CORE_PEER_LOCALMSPID=districtMSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
+      - CORE_OPERATIONS_LISTENADDRESS=RDO.district.example.com:19445
+      - CORE_METRICS_PROVIDER=prometheus
+      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"RDO"}
+      - CORE_CHAINCODE_EXECUTETIMEOUT=300s
+    volumes:
+      - ../../organizations/peerOrganizations/district.example.com/peers/RDO.district.example.com:/etc/hyperledger/fabric
+      - RDO.district.example.com:/var/hyperledger/production
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    ports:
+      - 19051:19051
+      - 19445:19445
+    networks:
+      - test

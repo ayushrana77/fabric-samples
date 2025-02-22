@@ -1,0 +1,29 @@
+Organizations:
+    - &district
+        Name: districtMSP
+        ID: districtMSP
+
+        MSPDir: ../organizations/peerOrganizations/district.example.com/msp
+
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('districtMSP.admin', 'districtMSP.peer', 'districtMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('districtMSP.admin', 'districtMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('districtMSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('districtMSP.peer')"
+
+        AnchorPeers:
+            - Host: surveyor.district.example.com
+              Port: 20051
+            - Host: revenue_inspector.district.example.com
+              Port: 21051
+            - Host: VRO.district.example.com
+              Port: 23051
+

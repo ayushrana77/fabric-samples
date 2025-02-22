@@ -1,0 +1,176 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '3.7'
+
+volumes:
+  superintendent.ITDA.example.com:
+  clerk.ITDA.example.com:
+  land-surveyor.ITDA.example.com:
+  project-officer.ITDA.example.com:
+
+networks:
+  test:
+    name: fabric_test
+
+services:
+
+  superintendent.ITDA.example.com:
+    container_name: superintendent.ITDA.example.com
+    image: hyperledger/fabric-peer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - FABRIC_CFG_PATH=/etc/hyperledger/peercfg
+      - FABRIC_LOGGING_SPEC=INFO
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      # Peer specific variables
+      - CORE_PEER_ID=superintendent.ITDA.example.com
+      - CORE_PEER_ADDRESS=superintendent.ITDA.example.com:28051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:28051
+      - CORE_PEER_CHAINCODEADDRESS=superintendent.ITDA.example.com:28052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:28052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=superintendent.ITDA.example.com:28051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=superintendent.ITDA.example.com:28051
+      - CORE_PEER_LOCALMSPID=ITDAMSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
+      - CORE_OPERATIONS_LISTENADDRESS=superintendent.ITDA.example.com:28445
+      - CORE_METRICS_PROVIDER=prometheus
+      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"superintendent"}
+      - CORE_CHAINCODE_EXECUTETIMEOUT=300s
+    volumes:
+      - ../../organizations/peerOrganizations/ITDA.example.com/peers/superintendent.ITDA.example.com:/etc/hyperledger/fabric
+      - superintendent.ITDA.example.com:/var/hyperledger/production
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    ports:
+      - 28051:28051
+      - 28445:28445
+    networks:
+      - test
+  
+  clerk.ITDA.example.com:
+    container_name: clerk.ITDA.example.com
+    image: hyperledger/fabric-peer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - FABRIC_CFG_PATH=/etc/hyperledger/peercfg
+      - FABRIC_LOGGING_SPEC=INFO
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      # Peer specific variables
+      - CORE_PEER_ID=clerk.ITDA.example.com
+      - CORE_PEER_ADDRESS=clerk.ITDA.example.com:29051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:29051
+      - CORE_PEER_CHAINCODEADDRESS=clerk.ITDA.example.com:29052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:29052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=clerk.ITDA.example.com:29051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=clerk.ITDA.example.com:29051
+      - CORE_PEER_LOCALMSPID=ITDAMSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
+      - CORE_OPERATIONS_LISTENADDRESS=clerk.ITDA.example.com:29445
+      - CORE_METRICS_PROVIDER=prometheus
+      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"clerk"}
+      - CORE_CHAINCODE_EXECUTETIMEOUT=300s
+    volumes:
+      - ../../organizations/peerOrganizations/ITDA.example.com/peers/clerk.ITDA.example.com:/etc/hyperledger/fabric
+      - clerk.ITDA.example.com:/var/hyperledger/production
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    ports:
+      - 29051:29051
+      - 29445:29445
+    networks:
+      - test
+  
+  land-surveyor.ITDA.example.com:
+    container_name: land-surveyor.ITDA.example.com
+    image: hyperledger/fabric-peer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - FABRIC_CFG_PATH=/etc/hyperledger/peercfg
+      - FABRIC_LOGGING_SPEC=INFO
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_ENDORSER_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      # Peer specific variables
+      - CORE_PEER_ID=land-surveyor.ITDA.example.com
+      - CORE_PEER_ADDRESS=land-surveyor.ITDA.example.com:30051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:30051
+      - CORE_PEER_CHAINCODEADDRESS=land-surveyor.ITDA.example.com:30052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:30052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=land-surveyor.ITDA.example.com:30051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=land-surveyor.ITDA.example.com:30051
+      - CORE_PEER_LOCALMSPID=ITDAMSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
+      - CORE_OPERATIONS_LISTENADDRESS=land-surveyor.ITDA.example.com:30445
+      - CORE_METRICS_PROVIDER=prometheus
+      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"land-surveyor"}
+      - CORE_CHAINCODE_EXECUTETIMEOUT=300s
+    volumes:
+      - ../../organizations/peerOrganizations/ITDA.example.com/peers/land-surveyor.ITDA.example.com:/etc/hyperledger/fabric
+      - land-surveyor.ITDA.example.com:/var/hyperledger/production
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    ports:
+      - 30051:30051
+      - 30445:30445
+    networks:
+      - test
+  
+  project-officer.ITDA.example.com:
+    container_name: project-officer.ITDA.example.com
+    image: hyperledger/fabric-peer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - FABRIC_CFG_PATH=/etc/hyperledger/peercfg
+      - FABRIC_LOGGING_SPEC=INFO
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_ENDORSER_ENABLED=false
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      # Peer specific variables
+      - CORE_PEER_ID=project-officer.ITDA.example.com
+      - CORE_PEER_ADDRESS=project-officer.ITDA.example.com:31051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:31051
+      - CORE_PEER_CHAINCODEADDRESS=project-officer.ITDA.example.com:31052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:31052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=project-officer.ITDA.example.com:31051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=project-officer.ITDA.example.com:31051
+      - CORE_PEER_LOCALMSPID=ITDAMSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
+      - CORE_OPERATIONS_LISTENADDRESS=project-officer.ITDA.example.com:31445
+      - CORE_METRICS_PROVIDER=prometheus
+      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"project-officer"}
+      - CORE_CHAINCODE_EXECUTETIMEOUT=310s
+    volumes:
+      - ../../organizations/peerOrganizations/ITDA.example.com/peers/project-officer.ITDA.example.com:/etc/hyperledger/fabric
+      - project-officer.ITDA.example.com:/var/hyperledger/production
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    ports:
+      - 31051:31051
+      - 31445:31445
+    networks:
+      - test
