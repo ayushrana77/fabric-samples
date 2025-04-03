@@ -1,0 +1,140 @@
+{
+    "name": "land-records-network",
+    "version": "1.0.0",
+    "client": {
+        "organization": "ITDA",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                },
+                "orderer": "300"
+            }
+        }
+    },
+    "organizations": {
+        "ITDA": {
+            "mspid": "ITDAMSP",
+            "peers": [
+                "superintendent.ITDA.example.com",
+                "clerk.ITDA.example.com",
+                "Land-surveyor.ITDA.example.com",
+                "project-officer.ITDA.example.com"
+            ]
+        }
+    },
+   "orderers": {
+        "orderer.example.com": {
+            "url": "grpcs://orderer.example.com:7050",
+            "tlsCACerts": {
+                "path": "../organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "orderer.example.com"
+            }
+        }
+    },
+    "peers": {
+        "superintendent.ITDA.example.com": {
+            "url": "grpcs://localhost:28051", 
+            "tlsCACerts": {
+    "path": "/home/ayush/go/src/github.com/ayushrana77/fabric-samples/test-network/organizations/peerOrganizations/ITDA.example.com/peers/superintendent.ITDA.example.com/tls/ca.crt"
+},
+            "grpcOptions": {
+                "ssl-target-name-override": "superintendent.ITDA.example.com"
+            }
+        },
+         "clerk.ITDA.example.com": {
+            "url": "grpcs://clerk.ITDA.example.com:29051",  
+            "tlsCACerts": {
+                "path": "../organizations/peerOrganizations/ITDA.example.com/peers/clerk.ITDA.example.com/tls/ca.crt"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "clerk.ITDA.example.com"
+            }
+        },
+        "Land-surveyor.ITDA.example.com": {
+            "url": "grpcs://Land-surveyor.ITDA.example.com:30051", 
+            "tlsCACerts": {
+                "path": "../organizations/peerOrganizations/ITDA.example.com/peers/land-surveyor.ITDA.example.com/tls/ca.crt"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "Land-surveyor.ITDA.example.com"
+            }
+        },
+        "project-officer.ITDA.example.com": {
+            "url": "grpcs://project-officer.ITDA.example.com:31051",  
+            "tlsCACerts": {
+                "path": "../organizations/peerOrganizations/ITDA.example.com/peers/project-officer.ITDA.example.com/tls/ca.crt"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "project-officer.ITDA.example.com"
+            }
+        }
+    },
+    "channels": {
+        "channel2": {
+            "orderers": [
+                "orderer.example.com"
+            ],
+            "peers": {
+                "superintendent.ITDA.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "clerk.ITDA.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "Land-surveyor.ITDA.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "project-officer.ITDA.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                }
+            }
+        },
+        "channel4": {
+            "orderers": [
+                "orderer.example.com"
+            ],
+            "peers": {
+                "superintendent.ITDA.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "clerk.ITDA.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "Land-surveyor.ITDA.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "project-officer.ITDA.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                }
+            }
+        }
+    }
+    
+}

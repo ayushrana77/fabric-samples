@@ -1,0 +1,154 @@
+{
+    "name": "land-records-network",
+    "version": "1.0.0",
+    "client": {
+        "organization": "districtofficials",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                },
+                "orderer": "300"
+            }
+        }
+    },
+    "organizations": {
+        "districtofficials": {
+            "mspid": "districtofficialsMSP",
+            "peers": [
+                "jc.districtofficials.example.com",
+                "ministry-of-tribal-welfare.districtofficials.example.com",
+                "dc.districtofficials.example.com",
+                "po.districtofficials.example.com"
+            ]
+        }
+    },
+   "orderers": {
+        "orderer.example.com": {
+            "url": "grpcs://orderer.example.com:7050",
+            "tlsCACerts": {
+                "path": "../organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "orderer.example.com"
+            }
+        }
+    },
+"peers": {
+    "ministry-of-tribal-welfare.districtofficials.example.com": {
+        "endorsingPeer": true,
+        "chaincodeQuery": true,
+        "ledgerQuery": true,
+        "eventSource": true,
+         "url": "grpcs://ministry-of-tribal-welfare.districtofficials.example.com:26051",  
+        "tlsCACerts": {
+            "path": "../organizations/peerOrganizations/districtofficials.example.com/peers/ministry-of-tribal-welfare.districtofficials.example.com/tls/ca.crt"
+        },
+        "grpcOptions": {
+            "ssl-target-name-override": "ministry-of-tribal-welfare.districtofficials.example.com"
+        }
+    },
+    "jc.districtofficials.example.com": {
+        "endorsingPeer": true,
+        "chaincodeQuery": true,
+        "ledgerQuery": true,
+        "eventSource": true,
+        "url": "grpcs://jc.districtofficials.example.com:25051",  
+        "tlsCACerts": {
+            "path": "../organizations/peerOrganizations/districtofficials.example.com/peers/jc.districtofficials.example.com/tls/ca.crt"
+        },
+        "grpcOptions": {
+            "ssl-target-name-override": "jc.districtofficials.example.com"
+        }
+    },
+    "po.districtofficials.example.com": {
+        "endorsingPeer": true,
+        "chaincodeQuery": true,
+        "ledgerQuery": true,
+        "eventSource": true,
+           "url": "grpcs://po.districtofficials.example.com:27051",  
+        "tlsCACerts": {
+            "path": "../organizations/peerOrganizations/districtofficials.example.com/peers/po.districtofficials.example.com/tls/ca.crt"
+        },
+        "grpcOptions": {
+            "ssl-target-name-override": "po.districtofficials.example.com"
+        }
+    },
+    "dc.districtofficials.example.com": {
+        "endorsingPeer": true,
+        "chaincodeQuery": true,
+        "ledgerQuery": true,
+        "eventSource": true,
+          "url": "grpcs://dc.districtofficials.example.com:24051",  
+        "tlsCACerts": {
+            "path": "../organizations/peerOrganizations/districtofficials.example.com/peers/dc.districtofficials.example.com/tls/ca.crt"
+        },
+        "grpcOptions": {
+            "ssl-target-name-override": "dc.districtofficials.example.com"
+        }
+    }
+},"channels": {
+        "channel4": {
+            "orderers": [
+                "orderer.example.com"
+            ],
+            "peers": {
+                "jc.districtofficials.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "ministry-of-tribal-welfare.districtofficials.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "dc.districtofficials.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "po.districtofficials.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                }
+            }
+        },
+        "channel3": {
+            "orderers": [
+                "orderer.example.com"
+            ],
+            "peers": {
+                "jc.districtofficials.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "ministry-of-tribal-welfare.districtofficials.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "dc.districtofficials.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "po.districtofficials.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                }
+            }
+        }
+    }
+}

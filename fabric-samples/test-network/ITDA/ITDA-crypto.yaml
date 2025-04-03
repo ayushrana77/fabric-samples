@@ -20,6 +20,10 @@ PeerOrgs:
       - Hostname: project-officer
     SANS:
       - localhost
+      - "superintendent.ITDA.example.com"
+      - "clerk.ITDA.example.com"
+      - "Land-surveyor.ITDA.example.com"
+      - "project-officer.ITDA.example.com"
     Users:
       Count: 1
 

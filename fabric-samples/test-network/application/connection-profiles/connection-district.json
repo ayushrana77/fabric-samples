@@ -1,0 +1,180 @@
+{
+    "name": "land-records-network",
+    "version": "1.0.0",
+    "client": {
+        "organization": "district",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                },
+                "orderer": "300"
+            }
+        }
+    },
+    "organizations": {
+        "ITDA": {
+            "mspid": "districtMSP",
+            "peers": [
+                "MRO.district.example.com",
+                "RDO.district.example.com",
+                "VRO.district.example.com",
+                "surveyor.district.example.com",
+                "revenue_inspector.district.example.com"
+            ]
+        }
+    },
+   "orderers": {
+        "orderer.example.com": {
+            "url": "grpcs://orderer.example.com:7050",
+            "tlsCACerts": {
+                "path": "../organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "orderer.example.com"
+            }
+        }
+    },
+
+    "peers": {
+        "MRO.district.example.com": {
+            "endorsingPeer": true,
+            "chaincodeQuery": true,
+            "ledgerQuery": true,
+            "eventSource": true,
+            "url": "grpcs://MRO.district.example.com:22051",  
+            "tlsCACerts": {
+                "path": "../organizations/peerOrganizations/district.example.com/peers/MRO.district.example.com/tls/ca.crt"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "MRO.district.example.com"
+            }
+        },
+        "VRO.district.example.com": {
+            "endorsingPeer": true,
+            "chaincodeQuery": true,
+            "ledgerQuery": true,
+            "eventSource": true,
+             "url": "grpcs://VRO.district.example.com:23051",  
+            "tlsCACerts": {
+                "path": "../organizations/peerOrganizations/district.example.com/peers/VRO.district.example.com/tls/ca.crt"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "VRO.district.example.com"
+            }
+        },
+        "revenue-inspector.district.example.com": {
+            "endorsingPeer": true,
+            "chaincodeQuery": true,
+            "ledgerQuery": true,
+            "eventSource": true,
+             "url": "grpcs://revenue-inspector.district.example.com:21051",  
+            "tlsCACerts": {
+                "path": "../organizations/peerOrganizations/district.example.com/peers/revenue-inspector.district.example.com/tls/ca.crt"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "revenue-inspector.district.example.com"
+            }
+        },
+        "RDO.district.example.com": {
+            "endorsingPeer": true,
+            "chaincodeQuery": true,
+            "ledgerQuery": true,
+            "eventSource": true,
+            "url": "grpcs://RDO.district.example.com:19051",  
+            "tlsCACerts": {
+                "path": "../organizations/peerOrganizations/district.example.com/peers/RDO.district.example.com/tls/ca.crt"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "RDO.district.example.com"
+            }
+        },
+        "surveyor.district.example.com": {
+            "endorsingPeer": true,
+            "chaincodeQuery": true,
+            "ledgerQuery": true,
+            "eventSource": true,
+            "url": "grpcs://surveyor.district.example.com:20051",  
+            "tlsCACerts": {
+                "path": "../organizations/peerOrganizations/district.example.com/peers/surveyor.district.example.com/tls/ca.crt"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "surveyor.district.example.com"
+            }
+        }
+    },
+    "channels": {
+        "channel2": {
+            "orderers": [
+                "orderer.example.com"
+            ],
+            "peers": {
+                "MRO.district.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "RDO.district.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "VRO.district.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "surveyor.district.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },"revenue_inspector.district.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                }
+            }
+        },
+        "channel3": {
+            "orderers": [
+                "orderer.example.com"
+            ],
+            "peers": {
+                "MRO.district.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "RDO.district.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "VRO.district.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "surveyor.district.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },"revenue_inspector.district.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                }
+            }
+        }
+    }
+}

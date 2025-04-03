@@ -1,0 +1,18 @@
+{
+  "name": "land-records-frontend-api",
+  "version": "1.0.0",
+  "description": "API gateway for Hyperledger Fabric backend",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

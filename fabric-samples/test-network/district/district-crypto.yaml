@@ -20,6 +20,11 @@ PeerOrgs:
       - Hostname: VRO
       - Hostname: RDO
     SANS:
+      - "VRO.district.example.com"
+      - "MRO.district.example.com"
+      - "revenue-inspector.district.example.com"
+      - "RDO.district.example.com"
+      - "surveyor.district.example.com"
       - localhost
     Users:
       Count: 1

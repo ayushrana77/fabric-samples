@@ -19,6 +19,10 @@ PeerOrgs:
       - Hostname: ministry-of-tribal-welfare
       - Hostname: po
     SANS:
+      - "ministry-of-tribal-welfare.districtofficials.example.com"
+      - "jc.districtofficials.example.com"
+      - "po.districtofficials.example.com"
+      - "dc.districtofficials.example.com"
       - localhost
     Users:
       Count: 1
