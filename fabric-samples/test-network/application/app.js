@@ -59,7 +59,7 @@ app.post('/api/landrecords', async (req, res) => {
         await gateway.connect(ccp, {
             wallet,
             identity: 'admin',
-            discovery: { enabled: false, asLocalhost: false }
+            discovery: { enabled: false, asLocalhost: true }
         });
 
         // Get the network channel
@@ -111,7 +111,7 @@ app.get('/api/landrecords/:landId', async (req, res) => {
         await gateway.connect(ccp, {
             wallet,
             identity: 'admin',
-            discovery: { enabled: false, asLocalhost: false }
+            discovery: { enabled: false, asLocalhost: true }
         });
 
         // Get the network channel

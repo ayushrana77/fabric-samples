@@ -6,9 +6,9 @@
         "connection": {
             "timeout": {
                 "peer": {
-                    "endorser": "300"
+                    "endorser": "30000"
                 },
-                "orderer": "300"
+                "orderer": "300000"
             }
         }
     },
@@ -132,6 +132,37 @@
                     "chaincodeQuery": true,
                     "ledgerQuery": true,
                     "eventSource": true
+                }
+            }
+        },
+        "channel5": {
+            "orderers": [
+                "orderer.example.com"
+            ],
+            "peers": {
+                "superintendent.ITDA.example.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                },
+                "clerk.ITDA.example.com": {
+                    "endorsingPeer": false,
+                    "chaincodeQuery": false,
+                    "ledgerQuery": false,
+                    "eventSource": false
+                },
+                "Land-surveyor.ITDA.example.com": {
+                    "endorsingPeer": false,
+                    "chaincodeQuery": false,
+                    "ledgerQuery": false,
+                    "eventSource": false
+                },
+                "project-officer.ITDA.example.com": {
+                    "endorsingPeer": false,
+                    "chaincodeQuery": false,
+                    "ledgerQuery": false,
+                    "eventSource": false
                 }
             }
         }

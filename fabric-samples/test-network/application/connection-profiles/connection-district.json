@@ -6,14 +6,14 @@
         "connection": {
             "timeout": {
                 "peer": {
-                    "endorser": "300"
+                    "endorser": "30000"
                 },
-                "orderer": "300"
+                "orderer": "30000"
             }
         }
     },
     "organizations": {
-        "ITDA": {
+        "district": {
             "mspid": "districtMSP",
             "peers": [
                 "MRO.district.example.com",
